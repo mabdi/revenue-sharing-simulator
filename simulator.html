@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Swash revenue sharing simulator</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+  <style id="compiled-css" type="text/css">
+      table, th, td {
+  border: 1px solid black;
+}
+  </style>
+
+
+</head>
+<body>
+    <h1>Program</h1>
+<div id='div_program'>
+<table >
+
+<tr>
+  <td>M: Block number</td>
+  <td><div id="div_program_m"></div></td>
+</tr>
+
+<tr>
+  <td>i: Pending incomes</td>
+  <td><div id="div_program_i"></div></td>
+</tr>
+<tr>
+  <td>p: portion</td>
+  <td><div id="div_program_p"></div></td>
+</tr>
+<tr>
+  <td>f: fund</td>
+  <td><div id="div_program_f"></div></td>
+</tr>
+<tr>
+  <td>W: &Sigma; weights </td>
+  <td><div id="div_program_w"></div></td>
+</tr>
+</table>
+</div>
+
+<h1>Users</h1>
+<div id='div_users'>
+<table id="table_users">
+<tr>
+  <td>User Id</td>
+  <td>Join time</td>
+  <td>Debt</td>
+  <td>Final balance</td>
+  <td>Weight</td>
+  <td>Action</td>
+</tr>
+</table>
+Join new user:
+<input type="button" value="Join (w=1)" onClick="newUserJoin()">
+</div>
+
+<h1>Incomes</h1>
+<div id='div_incomes'>
+<table id="table_incomes">
+<tr>
+  <td>Sequence Id</td>
+  <td>Value</td>
+</tr>
+</table>
+Insert new income:<br/>
+<input type="text" value="100" id="text_income_value">
+<input type="button" value="Insert" onClick="newIncomeInsert()">
+</div>
+
+<hr/>
+<input type="button" value="reset data" onClick="resetState()">
+<input type="button" value="example data" onClick="exampleData()">
+<input type="button" value="log state" onClick="logState()">
+<input type="button" value="Fuzz" onClick="fuzz()">
+
+    
+<script
+type="text/javascript"
+src="sim.js"
+
+></script>
+</body>
+</html>
+

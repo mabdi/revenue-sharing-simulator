@@ -60,7 +60,8 @@
 </tr>
 </table>
 Join new user:
-<input type="button" value="Join (w=1)" onClick="newUserJoin()">
+<input type="button" value="Join (w=1)" onClick="newUserJoin(1)">
+<input type="button" value="Join (w=?)" onClick="newUserJoin()">
 </div>
 
 <h1>Incomes</h1>
@@ -77,17 +78,15 @@ Insert new income:<br/>
 </div>
 
 <hr/>
+<input type="button" value="refresh view" onClick="viewUpdate()">
 <input type="button" value="reset data" onClick="resetState()">
 <input type="button" value="example data" onClick="exampleData()">
 <input type="button" value="log state" onClick="logState()">
 <input type="button" value="Fuzz" onClick="fuzz()">
 
     
-<script
-type="text/javascript"
-src="sim.js"
-
-></script>
+<script type="text/javascript" src="rev.js"></script>
+<script type="text/javascript" src="view.js"></script>
 </body>
 </html>
 

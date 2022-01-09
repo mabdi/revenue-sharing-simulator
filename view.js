@@ -149,6 +149,8 @@ function viewUpdate() {
     updateUsersTable();
     updateProgramTable();
     updateIncomesTable();
+    document.getElementById("check_assert").checked= check_assert
+    check_assert
 }
 
 function fuzz() {
@@ -179,7 +181,7 @@ function fuzz() {
         function(){
             // new income add
             let v = Math.floor(Math.random() * 200);
-            actionIncomeAdded(v)
+            appendNewIncome(v)
         },
         function(){
             // withdraw
@@ -208,7 +210,8 @@ function fuzz() {
     ]
     try {
         for (var i = 0; i < 1000000; i++) {
-            let n_u = Object.keys(users_data).length;
+            if(i % 10000 == 0)
+                console.log('fuzzing: '+ i)
             let action = Math.floor(Math.random() * actions.length);
             actions[action]();
         }
@@ -217,6 +220,7 @@ function fuzz() {
         console.log(err.stack);
         logState()
     }
+    console.log('fuzz completed.')
 }
 
 function exampleData() {
@@ -235,6 +239,7 @@ function logState() {
     console.log('incomes_data', incomes_data)
     console.log('users_data', users_data)
     console.log('actions_list', actions_list)
+    console.log('check_assert', check_assert)
 }
 
 function resetState() {
@@ -242,9 +247,15 @@ function resetState() {
     incomes_data = createInitialIncomes();
     users_data = createInitialUsers();
     actions_list = []
+    check_assert = false;
     viewUpdate();
 }
 
+function toggleCheckAssert(){
+    check_assert = !check_assert;
+}
+
+check_assert = false;
 program_data = createInitialState();
 incomes_data = createInitialIncomes();
 users_data = createInitialUsers();

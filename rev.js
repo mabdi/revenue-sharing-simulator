@@ -1,8 +1,10 @@
 function ensure(boolean) {
-  console.assert(boolean)
-  if (!boolean) {
-      console.trace();
-      throw "assertion failed";
+  if(check_assert){
+    console.assert(boolean)
+    if (!boolean) {
+        console.trace();
+        throw "assertion failed";
+    }
   }
 }
 
@@ -20,9 +22,10 @@ function appendNewUser(weight) {
 }
 
 function appendNewIncome(value) {
-  let array = Object.keys(users_data)
-  if (array.length == 0) 
+  if (program_data['W'] == 0) 
       return
+  if (value<=0)
+    return
   actions_list.push('appendNewIncome:' + value)
   incomes_data.push({
       id: incomes_data.length,
@@ -72,7 +75,7 @@ function weight_change(userId, new_weight) {
   program_data['M'] += 1
   if (program_data['W'] > 0 && program_data['i']) {
       program_data['f'] += program_data['i']
-      program_data['p'] += program_data['f'] / program_data['W']
+      program_data['p'] += program_data['i'] / program_data['W']
       program_data['i'] = 0
   }
   if (users_data[userId].weight > 0) {
@@ -103,11 +106,9 @@ function weight_change(userId, new_weight) {
 
 function userShare(userId) {
   let _u = users_data[userId]
-  let _f = program_data['f']
   let _p = program_data['p']
   if (program_data['i'] > 0 && program_data['W'] > 0) {
-      _f += program_data['i']
-      _p += _f / program_data['W']
+      _p += program_data['i'] / program_data['W']
   }
   return _u.weight * _p - _u.debt
 }

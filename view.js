@@ -154,6 +154,7 @@ function viewUpdate() {
 }
 
 function fuzz() {
+    document.getElementById('btn_fuzz').disabled = true;
     const MAX_W = 10
     const actions = [
         function(){
@@ -209,9 +210,10 @@ function fuzz() {
         }
     ]
     try {
-        for (var i = 0; i < 1000000; i++) {
-            if(i % 10000 == 0)
-                console.log('fuzzing: '+ i)
+        const MAX_F = 100000
+        for (var i = 0; i < MAX_F; i++) {
+            if(i % (MAX_F/10) == 0)
+                console.log('fuzzing: '+ (100 * i/MAX_F))
             let action = Math.floor(Math.random() * actions.length);
             actions[action]();
         }
@@ -221,6 +223,8 @@ function fuzz() {
         logState()
     }
     console.log('fuzz completed.')
+    viewUpdate();
+    document.getElementById('btn_fuzz').disabled = false;
 }
 
 function exampleData() {

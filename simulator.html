@@ -8,12 +8,20 @@
   <meta name="googlebot" content="noindex, nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-
   <style id="compiled-css" type="text/css">
       table, th, td {
   border: 1px solid black;
 }
+  .program_variable{
+    width: 100px;
+    text-align:right
+  }
+
+  #div_program table tr td {
+    min-width: 50px;
+  }
+
+
   </style>
 
 
@@ -24,27 +32,47 @@
 <table >
 
 <tr>
-  <td>M: Block number</td>
-  <td><div id="div_program_m"></div></td>
+  <td>M</td>
+  <td><div class='program_variable' id="div_program_m"></div></td>
+  <td>Action number</td>
 </tr>
 
 <tr>
-  <td>i: Pending incomes</td>
-  <td><div id="div_program_i"></div></td>
+  <td>i</td>
+  <td><div class='program_variable' id="div_program_i"></div></td>
+  <td>Pending incomes</td>
 </tr>
 <tr>
-  <td>p: portion</td>
-  <td><div id="div_program_p"></div></td>
+  <td>I</td>
+  <td><div class='program_variable' id="div_program_I"></div></td>
+  <td>&Sigma; incomes</td>
 </tr>
 <tr>
-  <td>f: fund</td>
-  <td><div id="div_program_f"></div></td>
+  <td>O</td>
+  <td><div class='program_variable' id="div_program_O"></div></td>
+  <td>&Sigma; outcomes</td>
 </tr>
 <tr>
-  <td>W: &Sigma; weights </td>
-  <td><div id="div_program_w"></div></td>
+  <td>p</td>
+  <td><div class='program_variable' id="div_program_p"></div></td>
+  <td>Portion</td>
+</tr>
+<tr>
+  <td>f</td>
+  <td><div class='program_variable' id="div_program_f"></div></td>
+  <td>Fund</td>
+</tr>
+<tr>
+  <td>W</td>
+  <td><div class='program_variable' id="div_program_w"></div></td>
+  <td>&Sigma; weights </td>
 </tr>
 </table>
+
+Insert new income:<br/>
+<input type="text" value="100" id="text_income_value">
+<input type="button" value="Insert" onClick="newIncomeInsert()">
+
 </div>
 
 <h1>Users</h1>
@@ -64,19 +92,6 @@ Join new user:
 <input type="button" value="Join (w=?)" onClick="newUserJoin()">
 </div>
 
-<h1>Incomes</h1>
-<div id='div_incomes'>
-<table id="table_incomes">
-<tr>
-  <td>Sequence Id</td>
-  <td>Value</td>
-</tr>
-</table>
-Insert new income:<br/>
-<input type="text" value="100" id="text_income_value">
-<input type="button" value="Insert" onClick="newIncomeInsert()">
-</div>
-
 <hr/>
 <input type="button" value="refresh view" onClick="viewUpdate()">
 <input type="button" value="reset data" onClick="resetState()">
@@ -84,7 +99,9 @@ Insert new income:<br/>
 <input type="button" value="log state" onClick="logState()">
 <input type="button" value="Fuzz" id='btn_fuzz' onClick="fuzz()">
 <input type="checkbox" value="Assert" id="check_assert" onClick="toggleCheckAssert()"> Asserts
+<input type="checkbox" value="Keep Actions Log" id="actions_log" onClick="toggleActionsLog()"> Keep Actions Log
     
+<script type="text/javascript" src="asserts.js"></script>
 <script type="text/javascript" src="rev.js"></script>
 <script type="text/javascript" src="view.js"></script>
 </body>

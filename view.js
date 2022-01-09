@@ -1,9 +1,11 @@
 function updateProgramTable() {
-    document.getElementById('div_program_m').innerHTML = JSON.stringify(program_data["M"]);
-    document.getElementById('div_program_i').innerHTML = JSON.stringify(program_data["i"]);
-    document.getElementById('div_program_p').innerHTML = JSON.stringify(program_data["p"]);
-    document.getElementById('div_program_f').innerHTML = JSON.stringify(program_data["f"]);
-    document.getElementById('div_program_w').innerHTML = JSON.stringify(program_data["W"]);
+    document.getElementById('div_program_m').innerHTML = program_data["M"];
+    document.getElementById('div_program_i').innerHTML = program_data["i"];
+    document.getElementById('div_program_I').innerHTML = program_data["I"];
+    document.getElementById('div_program_O').innerHTML = program_data["O"].toFixed(2);
+    document.getElementById('div_program_p').innerHTML = program_data["p"].toFixed(2);
+    document.getElementById('div_program_f').innerHTML = program_data["f"].toFixed(2);
+    document.getElementById('div_program_w').innerHTML = program_data["W"];
 }
 
 function newUserJoin(weight) {
@@ -23,6 +25,8 @@ function newIncomeInsert() {
 function createInitialState() {
     return {
         "i": 0,
+        "I": 0,
+        "O": 0,
         "p": 0,
         "f": 0,
         "W": 0,
@@ -36,20 +40,6 @@ function createInitialIncomes() {
 
 function createInitialUsers() {
     return {}
-}
-
-function updateIncomesTable() {
-    var table = document.getElementById('table_incomes')
-    for (var i = table.rows.length - 1; i > 0; i--) {
-        table.deleteRow(i);
-    }
-    for (var rowData of incomes_data) {
-        var row = table.insertRow(1);
-        var cell = row.insertCell(0);
-        cell.innerHTML = JSON.stringify(rowData.id)
-        cell = row.insertCell(1);
-        cell.innerHTML = JSON.stringify(rowData["value"])
-    }
 }
 
 function updateUsersTable() {
@@ -148,9 +138,8 @@ function userOnWithdraw(userId) {
 function viewUpdate() {
     updateUsersTable();
     updateProgramTable();
-    updateIncomesTable();
     document.getElementById("check_assert").checked= check_assert
-    check_assert
+    document.getElementById("actions_log").checked= keep_logs
 }
 
 function fuzz() {
@@ -190,6 +179,9 @@ function fuzz() {
             if (array.length == 0) 
                 return
             let u = array[Math.floor(Math.random() * array.length)];
+            let _u = users_data[u]
+            if(_u.weight==0)
+                return
             actionWithdraw(u)
         },
         function(){
@@ -198,6 +190,9 @@ function fuzz() {
             if (array.length == 0) 
                 return
             let u = array[Math.floor(Math.random() * array.length)];
+            let _u = users_data[u]
+            if(_u.weight==0)
+                return
             actionExit(u)
         },
         function(){
@@ -207,6 +202,18 @@ function fuzz() {
                 return
             let u = array[Math.floor(Math.random() * array.length)];
             userShare(u)
+        },
+        function(){
+            // exit all
+            let array = Object.keys(users_data)
+            if (array.length == 0) 
+                return
+            for(let uid in users_data){
+                let _u = users_data[uid]
+                if(_u.weight>0){
+                    actionExit(uid)
+                }
+            }
         }
     ]
     try {
@@ -240,18 +247,19 @@ function exampleData() {
 
 function logState() {
     console.log('program_data', program_data)
-    console.log('incomes_data', incomes_data)
     console.log('users_data', users_data)
     console.log('actions_list', actions_list)
     console.log('check_assert', check_assert)
+    console.log('keep_logs', keep_logs)
+    
 }
 
 function resetState() {
     program_data = createInitialState();
-    incomes_data = createInitialIncomes();
     users_data = createInitialUsers();
     actions_list = []
     check_assert = false;
+    keep_logs = false;
     viewUpdate();
 }
 
@@ -259,9 +267,13 @@ function toggleCheckAssert(){
     check_assert = !check_assert;
 }
 
+function toggleActionsLog(){
+    keep_logs = !keep_logs
+}
+
 check_assert = false;
+keep_logs = false;
 program_data = createInitialState();
-incomes_data = createInitialIncomes();
 users_data = createInitialUsers();
 actions_list = []
 viewUpdate();

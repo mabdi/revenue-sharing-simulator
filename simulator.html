@@ -13,7 +13,7 @@
   border: 1px solid black;
 }
   .program_variable{
-    width: 100px;
+    width: 200px;
     text-align:right
   }
 
@@ -31,26 +31,11 @@
 <div id='div_program'>
 <table >
 
-<tr>
-  <td>M</td>
-  <td><div class='program_variable' id="div_program_m"></div></td>
-  <td>Action number</td>
-</tr>
 
 <tr>
   <td>i</td>
   <td><div class='program_variable' id="div_program_i"></div></td>
   <td>Pending incomes</td>
-</tr>
-<tr>
-  <td>I</td>
-  <td><div class='program_variable' id="div_program_I"></div></td>
-  <td>&Sigma; incomes</td>
-</tr>
-<tr>
-  <td>O</td>
-  <td><div class='program_variable' id="div_program_O"></div></td>
-  <td>&Sigma; outcomes</td>
 </tr>
 <tr>
   <td>p</td>
@@ -67,6 +52,27 @@
   <td><div class='program_variable' id="div_program_w"></div></td>
   <td>&Sigma; weights </td>
 </tr>
+<tr>
+  <td colspan="3">
+    Debug variables:
+  </td>
+</tr>
+<tr>
+  <td>* T</td>
+  <td><div class='program_variable' id="div_program_t"></div></td>
+  <td>Debug: Time or action number</td>
+</tr>
+<tr>
+  <td>* I</td>
+  <td><div class='program_variable' id="div_program_I"></div></td>
+  <td>Debug: &Sigma; incomes</td>
+</tr>
+<tr>
+  <td>* O</td>
+  <td><div class='program_variable' id="div_program_O"></div></td>
+  <td>Debug: &Sigma; outcomes</td>
+</tr>
+
 </table>
 
 Insert new income:<br/>
@@ -80,10 +86,10 @@ Insert new income:<br/>
 <table id="table_users">
 <tr>
   <td>User Id</td>
-  <td>Join time</td>
-  <td>Debt</td>
-  <td>Final balance</td>
   <td>Weight</td>
+  <td>Debt</td>
+  <td>* Join time</td>
+  <td>* Final balance</td>
   <td>Action</td>
 </tr>
 </table>

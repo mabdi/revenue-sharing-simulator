@@ -1,9 +1,9 @@
 function updateProgramTable() {
-    document.getElementById('div_program_m').innerHTML = program_data["M"];
+    document.getElementById('div_program_t').innerHTML = debug_data["T"];
     document.getElementById('div_program_i').innerHTML = program_data["i"];
-    document.getElementById('div_program_I').innerHTML = program_data["I"];
-    document.getElementById('div_program_O').innerHTML = program_data["O"] //.toFixed(2);
-    document.getElementById('div_program_p').innerHTML = program_data["p"] //.toFixed(2);
+    document.getElementById('div_program_I').innerHTML = debug_data["I"];
+    document.getElementById('div_program_O').innerHTML = debug_data["O"] //.toFixed(2);
+    document.getElementById('div_program_p').innerHTML = program_data["p"].toString().replace(/\B(?<!\.\d*)(?=(\d{18})+(?!\d))/g, ","); //.toFixed(2);
     document.getElementById('div_program_f').innerHTML = program_data["f"] //.toFixed(2);
     document.getElementById('div_program_w').innerHTML = program_data["W"];
 }
@@ -25,12 +25,18 @@ function newIncomeInsert() {
 function createInitialState() {
     return {
         "i": BigInt(0),
-        "I": BigInt(0),
-        "O": BigInt(0),
         "p": BigInt(0),
         "f": BigInt(0),
-        "W": BigInt(0),
-        "M": BigInt(0)
+        "W": BigInt(0)
+        
+    }
+}
+
+function createInitialDebugState() {
+    return {
+        "T": BigInt(0),
+        "I": BigInt(0),
+        "O": BigInt(0)
     }
 }
 
@@ -53,13 +59,13 @@ function updateUsersTable() {
         var cell = row.insertCell(0);
         cell.innerHTML = rowData.id
         cell = row.insertCell(1);
-        cell.innerHTML = rowData["join_time"]
+        cell.innerHTML = rowData["weight"]
         cell = row.insertCell(2);
         cell.innerHTML = rowData["debt"] //.toFixed(2)
         cell = row.insertCell(3);
-        cell.innerHTML = rowData["final"] //.toFixed(2)
+        cell.innerHTML = rowData["join_time"]
         cell = row.insertCell(4);
-        cell.innerHTML = rowData["weight"]
+        cell.innerHTML = rowData["final"] //.toFixed(2)
         cell = row.insertCell(5);
         if (rowData["weight"] > 0) {
             var node = document.createElement('input')
@@ -255,6 +261,7 @@ function logState() {
 }
 
 function resetState() {
+    debug_data = createInitialDebugState();
     program_data = createInitialState();
     users_data = createInitialUsers();
     actions_list = []
@@ -273,6 +280,7 @@ function toggleActionsLog(){
 
 check_assert = false;
 keep_logs = false;
+debug_data = createInitialDebugState();
 program_data = createInitialState();
 users_data = createInitialUsers();
 actions_list = []

@@ -6,7 +6,7 @@ function appendNewUser(weight) {
   var id = Object.keys(users_data).length;
   users_data[id] = {
       'id': id,
-      'join_time': program_data["M"],
+      'join_time': debug_data["T"],
       'debt': BigInt(0),
       'final': BigInt(0),
       'weight': BigInt(0)
@@ -36,9 +36,9 @@ function actionChangeWeight(userId, new_weight) {
 function actionIncomeAdded(value) {
   let assertPre = assertPreIncomeAdded(value)
   if(keep_logs){actions_list.push('actionIncomeAdded:' + value)}
-  program_data['M'] += 1n
-  program_data['i'] += value
-  program_data['I'] += value
+  program_data['i'] = program_data['i'] + value
+  debug_data['T'] = debug_data['T'] + 1n
+  debug_data['I'] = debug_data['I'] + value
   assertPostIncomeAdded(value, assertPre)
 }
 
@@ -50,30 +50,30 @@ function actionExit(userId) {
 function weight_change(userId, new_weight) {
   let preState = assertPreWeightChange(userId, new_weight)
   
-  program_data['M'] += 1n
+  debug_data['T'] = debug_data['T'] + 1n
   if (program_data['W'] > 0 && program_data['i']) {
-      program_data['f'] += program_data['i']
-      program_data['p'] += BigInt( (program_data['i']*UNITS) / program_data['W'])
+      program_data['f'] = program_data['f'] + program_data['i']
+      program_data['p'] = program_data['p'] + ((program_data['i']*UNITS) / program_data['W'])
       program_data['i'] = 0n
   }
   if (users_data[userId].weight > 0) {
-      let r = BigInt( (users_data[userId].weight * program_data['p'] / UNITS) - users_data[userId].debt )
+      let r = (users_data[userId].weight * program_data['p'] / UNITS) - users_data[userId].debt 
       if (r > 0) {
-          users_data[userId].final += r
-          program_data['f'] -= r
-          if(program_data['f']<0){
-            console.assert(false)
-          }
-          program_data['O'] += r
-          users_data[userId].debt = BigInt( users_data[userId].weight * program_data['p'] / UNITS)
+        if(program_data['f'] < r){
+          r = program_data['f']
+        }
+        users_data[userId].final = users_data[userId].final + r
+        program_data['f'] = program_data['f'] - r
+        debug_data['O'] = debug_data['O'] + r
+        users_data[userId].debt = users_data[userId].weight * program_data['p'] / UNITS
       } else {
-          users_data[userId].debt = BigInt( users_data[userId].weight * program_data['p'] / UNITS)
+          users_data[userId].debt = users_data[userId].weight * program_data['p'] / UNITS
       }
   }
   let weight_delta = new_weight - users_data[userId].weight
   users_data[userId].weight = new_weight
-  users_data[userId].debt = BigInt( users_data[userId].weight * program_data['p'] / UNITS )
-  program_data['W'] += weight_delta
+  users_data[userId].debt = users_data[userId].weight * program_data['p'] / UNITS
+  program_data['W'] = program_data['W'] + weight_delta
 
   assertPostWeightChange(userId, new_weight, preState)
 }
@@ -82,7 +82,7 @@ function userShare(userId) {
   let _u = users_data[userId]
   let _p = program_data['p']
   if (program_data['i'] > 0 && program_data['W'] > 0) {
-      _p += BigInt( (program_data['i'] * UNITS) / program_data['W'])
+      _p =  _p + ((program_data['i'] * UNITS) / program_data['W'])
   }
-  return BigInt( (_u.weight * _p / UNITS) - _u.debt)
+  return  (_u.weight * _p / UNITS) - _u.debt
 }

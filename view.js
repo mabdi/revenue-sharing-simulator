@@ -2,35 +2,35 @@ function updateProgramTable() {
     document.getElementById('div_program_m').innerHTML = program_data["M"];
     document.getElementById('div_program_i').innerHTML = program_data["i"];
     document.getElementById('div_program_I').innerHTML = program_data["I"];
-    document.getElementById('div_program_O').innerHTML = program_data["O"].toFixed(2);
-    document.getElementById('div_program_p').innerHTML = program_data["p"].toFixed(2);
-    document.getElementById('div_program_f').innerHTML = program_data["f"].toFixed(2);
+    document.getElementById('div_program_O').innerHTML = program_data["O"] //.toFixed(2);
+    document.getElementById('div_program_p').innerHTML = program_data["p"] //.toFixed(2);
+    document.getElementById('div_program_f').innerHTML = program_data["f"] //.toFixed(2);
     document.getElementById('div_program_w').innerHTML = program_data["W"];
 }
 
 function newUserJoin(weight) {
     if(weight==null){
-        weight= parseInt(prompt("Weight?"))
+        weight= BigInt(prompt("Weight?"))
     }
     appendNewUser(weight);
     viewUpdate();
 }
 
 function newIncomeInsert() {
-    var myValue = parseInt(document.getElementById('text_income_value').value);
+    var myValue = BigInt(document.getElementById('text_income_value').value);
     appendNewIncome(myValue)
     viewUpdate();
 }
 
 function createInitialState() {
     return {
-        "i": 0,
-        "I": 0,
-        "O": 0,
-        "p": 0,
-        "f": 0,
-        "W": 0,
-        "M": 0
+        "i": BigInt(0),
+        "I": BigInt(0),
+        "O": BigInt(0),
+        "p": BigInt(0),
+        "f": BigInt(0),
+        "W": BigInt(0),
+        "M": BigInt(0)
     }
 }
 
@@ -51,15 +51,15 @@ function updateUsersTable() {
         var rowData = users_data[rowId]
         var row = table.insertRow(1);
         var cell = row.insertCell(0);
-        cell.innerHTML = JSON.stringify(rowData.id)
+        cell.innerHTML = rowData.id
         cell = row.insertCell(1);
-        cell.innerHTML = JSON.stringify(rowData["join_time"])
+        cell.innerHTML = rowData["join_time"]
         cell = row.insertCell(2);
-        cell.innerHTML = rowData["debt"].toFixed(2)
+        cell.innerHTML = rowData["debt"] //.toFixed(2)
         cell = row.insertCell(3);
-        cell.innerHTML = rowData["final"].toFixed(2)
+        cell.innerHTML = rowData["final"] //.toFixed(2)
         cell = row.insertCell(4);
-        cell.innerHTML = JSON.stringify(rowData["weight"])
+        cell.innerHTML = rowData["weight"]
         cell = row.insertCell(5);
         if (rowData["weight"] > 0) {
             var node = document.createElement('input')
@@ -120,9 +120,9 @@ function userOnQuery(userId) {
 }
 
 function userOnChangeWeight(userId, change) {
-    let final = 0
+    let final = 0n
     if(change == null){
-        final = parseInt(prompt("change to:"));
+        final = BigInt(prompt("change to:"));
     }else{
         final = users_data[userId]['weight'] + change
     }

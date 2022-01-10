@@ -1,10 +1,14 @@
+function printPrice(price){
+    return price.toString().replace(/\B(?<!\.\d*)(?=(\d{18})+(?!\d))/g, ".");
+}
+
 function updateProgramTable() {
     document.getElementById('div_program_t').innerHTML = debug_data["T"];
-    document.getElementById('div_program_i').innerHTML = program_data["i"];
-    document.getElementById('div_program_I').innerHTML = debug_data["I"];
-    document.getElementById('div_program_O').innerHTML = debug_data["O"] //.toFixed(2);
-    document.getElementById('div_program_p').innerHTML = program_data["p"].toString().replace(/\B(?<!\.\d*)(?=(\d{18})+(?!\d))/g, ","); //.toFixed(2);
-    document.getElementById('div_program_f').innerHTML = program_data["f"] //.toFixed(2);
+    document.getElementById('div_program_i').innerHTML = printPrice(    program_data["i"])
+    document.getElementById('div_program_I').innerHTML = printPrice(    debug_data["I"])
+    document.getElementById('div_program_O').innerHTML = printPrice(    debug_data["O"])
+    document.getElementById('div_program_p').innerHTML = printPrice(    program_data["p"])
+    document.getElementById('div_program_f').innerHTML = printPrice(    program_data["f"])
     document.getElementById('div_program_w').innerHTML = program_data["W"];
 }
 
@@ -61,11 +65,11 @@ function updateUsersTable() {
         cell = row.insertCell(1);
         cell.innerHTML = rowData["weight"]
         cell = row.insertCell(2);
-        cell.innerHTML = rowData["debt"] //.toFixed(2)
+        cell.innerHTML = printPrice(    rowData["debt"])
         cell = row.insertCell(3);
         cell.innerHTML = rowData["join_time"]
         cell = row.insertCell(4);
-        cell.innerHTML = rowData["final"] //.toFixed(2)
+        cell.innerHTML = printPrice(    rowData["final"])
         cell = row.insertCell(5);
         if (rowData["weight"] > 0) {
             var node = document.createElement('input')
@@ -122,7 +126,7 @@ function userOnExit(userId) {
 
 function userOnQuery(userId) {
     var share = userShare(userId);
-    alert(share)
+    alert(printPrice( share))
 }
 
 function userOnChangeWeight(userId, change) {

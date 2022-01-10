@@ -33,7 +33,7 @@ function assertPreWeightChange(userId, new_weight){
   for(let key in users_data){
     all_revs[key] = userShare(key)
   }
-  return {all_revs: all_revs, O: debug_data['O']}
+  return {all_revs: all_revs, dbg: {O: debug_data['O']}, program: {f: program_data['f']} }
 }
 
 function assertPostWeightChange(userId, new_weight, state){
@@ -49,7 +49,8 @@ function assertPostWeightChange(userId, new_weight, state){
         ensure(state.all_revs[key] == userShare(key));
     }else{
         ensure(userShare(key) == 0)
-        ensure(debug_data['O'] - state.O == state.all_revs[key])
+        ensure(debug_data['O'] - state.dbg.O == state.all_revs[key])
+        ensure(program_data['f'] - state.program.f == state.all_revs[key])
     }
   };
 }
